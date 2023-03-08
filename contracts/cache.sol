@@ -8,10 +8,8 @@ contract Cache{
     mapping(uint => uint)public val2key;
     uint[] public key2val;
 
-
-
     function cacheRead(uint _key)public view returns(uint){
-        require(_key <= key2val.length,"Reading uninitialized cache entry");
+        require(_key <=key2val.length,"Reading uninitialized cache entry");
         return key2val[_key-1];
     }
 
@@ -121,5 +119,12 @@ contract Cache{
         revert("Error in encodeVal, should not happen");
     }
 
+    function bytesToUint(bytes memory b) public pure returns (uint256){
+            uint256 number;
+            for(uint i=0;i<b.length;i++){
+                number = number + uint(uint8(b[i]))*(2**(8*(b.length-(i+1))));
+            }
+        return number;
+    }
 
 }
